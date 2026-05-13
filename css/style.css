@@ -697,6 +697,164 @@ body {
 .services-cta { text-align: center; }
 .services-cta p { color: #9ca3af; margin-bottom: 1.5rem; }
 
+/* Skills Section */
+.skills-section {
+    padding: 5rem 0;
+    background: #111827; /* Alternate dark background to split the page nicely */
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .skills-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.skill-card {
+    background: #1f2937; /* Dark card */
+    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    animation: slideUp 0.6s ease-out;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    border-color: rgba(96, 165, 250, 0.3); /* Subtle blue glow on hover */
+}
+
+.skill-card-title {
+    color: #ffffff;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.skill-tag {
+    background: #111827; /* Inner dark pill */
+    color: #d1d5db;
+    border: 1px solid #374151;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.skill-card:hover .skill-tag {
+    border-color: #4b5563; /* Pills light up slightly on card hover */
+}
+
+/* Reviews Section */
+.reviews-section {
+    padding: 5rem 0;
+    background: #0b0f19; /* Main background color */
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .reviews-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.review-card {
+    background: #1f2937; /* Dark card */
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    transition: all 0.3s ease;
+    animation: slideUp 0.6s ease-out;
+    overflow: hidden; /* Keeps the giant quote mark contained */
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.review-stars {
+    color: #f59e0b; /* Gold/Orange Stars */
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2; /* Keeps text above the quote watermark */
+}
+
+.reviewer-img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.reviewer-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewer-name {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.reviewer-role {
+    color: #9ca3af;
+    font-size: 0.85rem;
+}
+
+.quote-icon {
+    position: absolute;
+    right: 0rem;
+    top: -1rem;
+    font-size: 6rem;
+    color: #3b82f6; 
+    opacity: 0.1; /* Faded watermark style */
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+    z-index: 1;
+}
+
+.review-text {
+    color: #d1d5db;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+}
+
 /* Contact Section */
 .contact-section {
     padding: 5rem 0;
@@ -1044,9 +1202,9 @@ body {
 /* Responsive Overrides Fallback */
 @media (max-width: 767px) {
     .hero-buttons { flex-direction: column; }
-    .services-grid { grid-template-columns: 1fr; }
-    .portfolio-grid { grid-template-columns: 1fr; }
-    .contact-grid { grid-template-columns: 1fr; }
+    .services-grid, .skills-grid, .reviews-grid, .portfolio-grid, .contact-grid { 
+        grid-template-columns: 1fr; 
+    }
     
     .footer-grid {
         grid-template-columns: 1fr;
