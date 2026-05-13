@@ -136,7 +136,7 @@ const scrollObserver = new IntersectionObserver((entries, observer) => {
 
 // Initialize animations
 function initAnimations() {
-    const animatedElements = document.querySelectorAll('.portfolio-item, .service-card, .contact-card');
+    const animatedElements = document.querySelectorAll('.portfolio-item, .service-card, .contact-card, .skill-card, .review-card');
     
     animatedElements.forEach((element) => {
         // Set initial hidden state
