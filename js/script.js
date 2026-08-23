@@ -203,3 +203,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Expose scrollToSection function globally for inline onclick HTML attributes
 window.scrollToSection = scrollToSection;
+
+
+// --- NEW BACK TO TOP LOGIC ---
+const backToTopBtn = document.getElementById('backToTopBtn');
+
+if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// Make sure the new timeline cards are animated!
+function initAnimations() {
+    // I added .timeline-item to this list so they fade in as you scroll!
+    const animatedElements = document.querySelectorAll('.portfolio-item, .service-card, .contact-card, .skill-card, .review-card, .timeline-item');
+    
+    animatedElements.forEach((element) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(40px)';
+        element.style.transition = 'all 0.6s ease-out';
+        scrollObserver.observe(element);
+    });
+}
