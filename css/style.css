@@ -319,6 +319,8 @@ body {
     justify-content: center;
     position: relative;
     overflow: hidden;
+    /* Clear the fixed navbar so the badge is not hidden behind it */
+    padding: 6rem 1rem 3rem;
 }
 
 /* Darkened Gradient Background */
@@ -1378,6 +1380,15 @@ body {
     animation: fadeIn 0.8s ease-out;
 }
 
+@media (max-width: 480px) {
+    .availability-badge {
+        font-size: 0.72rem;
+        padding: 0.4rem 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+
 .pulse-dot {
     width: 8px;
     height: 8px;
@@ -1586,8 +1597,8 @@ body {
     opacity: 0;
     visibility: hidden;
     position: fixed;
-    bottom: 2rem;
-    right: 2rem;
+    bottom: 6rem;
+    right: 1.5rem;
     z-index: 9999;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 }
@@ -1601,4 +1612,89 @@ body {
     background: linear-gradient(135deg, #3b82f6, #8b5cf6);
     color: #ffffff;
     transform: translateY(-3px);
+}
+
+/* ============================================================
+   Floating WhatsApp enquiry button
+   ============================================================ */
+.whatsapp-fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 9998;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem;
+    border-radius: 9999px;
+    background: #25d366;
+    color: #05291a;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1;
+    box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.45),
+                0 4px 6px -4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.whatsapp-fab svg {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: block;
+}
+
+/* Icon only on phones; full label from tablet up */
+.whatsapp-fab .whatsapp-fab-label {
+    display: none;
+    padding-right: 0.4rem;
+}
+
+@media (min-width: 768px) {
+    .whatsapp-fab .whatsapp-fab-label { display: inline; }
+}
+
+.whatsapp-fab:hover,
+.whatsapp-fab:focus-visible {
+    background: #1fbe5a;
+    color: #05291a;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px -5px rgba(37, 211, 102, 0.6),
+                0 4px 6px -4px rgba(0, 0, 0, 0.5);
+}
+
+.whatsapp-fab:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+}
+
+/* One-off attention ring so first-time visitors notice it */
+.whatsapp-fab::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 2px solid #25d366;
+    animation: whatsapp-ping 2.4s ease-out 3;
+    pointer-events: none;
+}
+
+@keyframes whatsapp-ping {
+    0%   { transform: scale(1);   opacity: 0.85; }
+    100% { transform: scale(1.5); opacity: 0;    }
+}
+
+@media (max-width: 480px) {
+    .whatsapp-fab { bottom: 1rem; right: 1rem; padding: 0.8rem; }
+    .whatsapp-fab svg { width: 26px; height: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .whatsapp-fab { transition: none; }
+    .whatsapp-fab::after { animation: none; display: none; }
+}
+
+@media print {
+    .whatsapp-fab { display: none; }
 }
