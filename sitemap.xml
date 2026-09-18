@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://arttistic.online/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+
+    <!-- Portfolio work, so the images can rank in Google Images -->
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/CKJ%20Technologies_logo.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/street_walk_24th_jogging.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/Qualify%20Suit%20website%20design.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/wedding_photography.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/Med%20Claims%20Mobile%20UI.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/FAAB%20Systems%20Flyer%20-%2015.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/artistic-preview.jpg</image:loc>
+    </image:image>
+  </url>
+
+</urlset>
