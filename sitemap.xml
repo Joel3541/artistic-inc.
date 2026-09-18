@@ -32,4 +32,43 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://arttistic.online/graphic-design/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/CKJ%20Technologies_logo.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/FAAB%20Systems%20Flyer%20-%2015.jpg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://arttistic.online/photography/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/wedding_photography.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/street_walk_24th_jogging.jpg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://arttistic.online/web-design/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/Qualify%20Suit%20website%20design.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://arttistic.online/assets/img/Med%20Claims%20Mobile%20UI.png</image:loc>
+    </image:image>
+  </url>
+
 </urlset>

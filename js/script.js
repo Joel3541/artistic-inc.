@@ -197,11 +197,11 @@ async function handleContactFormSubmit(e) {
 
 // Handle navigation link clicks
 function handleNavLinkClick(e) {
-    e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
+    // Only hijack same-page anchors; let real links (service pages) navigate
     if (href && href.startsWith('#')) {
-        const sectionId = href.substring(1);
-        scrollToSection(sectionId);
+        e.preventDefault();
+        scrollToSection(href.substring(1));
     }
 }
 

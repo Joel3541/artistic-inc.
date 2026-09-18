@@ -1,0 +1,462 @@
+/* ============================================================
+   Service landing pages (/graphic-design/, /photography/, /web-design/)
+   Layered on top of style.css - reuses its colours, buttons and shell.
+   ============================================================ */
+
+/* ---------- Hero ---------- */
+.service-hero {
+    position: relative;
+    padding: 9rem 1rem 4rem;
+    text-align: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #0b0f19 100%);
+    overflow: hidden;
+}
+
+.service-hero::after {
+    content: '';
+    position: absolute;
+    width: 28rem;
+    height: 28rem;
+    top: -10rem;
+    right: -8rem;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.18), transparent 70%);
+    pointer-events: none;
+}
+
+.service-hero-inner {
+    position: relative;
+    max-width: 52rem;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+.service-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    line-height: 1.15;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+}
+
+@media (min-width: 768px) {
+    .service-hero h1 { font-size: 3.4rem; }
+}
+
+.service-lede {
+    font-size: 1.1rem;
+    color: #d1d5db;
+    max-width: 44rem;
+    margin: 0 auto 2rem;
+}
+
+.service-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    justify-content: center;
+}
+
+.service-hero-actions .btn-primary,
+.service-hero-actions .btn-secondary {
+    display: inline-block;
+    text-decoration: none;
+}
+
+/* ---------- Breadcrumb ---------- */
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin-bottom: 1.5rem;
+    padding: 0;
+    list-style: none;
+}
+
+.breadcrumb li { display: flex; align-items: center; gap: 0.5rem; }
+.breadcrumb li + li::before { content: '/'; color: #4b5563; }
+.breadcrumb a { color: #9ca3af; text-decoration: none; transition: color 0.2s ease; }
+.breadcrumb a:hover { color: #60a5fa; }
+.breadcrumb [aria-current='page'] { color: #d1d5db; }
+
+/* ---------- Generic section shell ---------- */
+.service-section {
+    padding: 4.5rem 1rem;
+}
+
+.service-section:nth-of-type(even) {
+    background: #0e1421;
+}
+
+.service-inner {
+    max-width: 68rem;
+    margin: 0 auto;
+}
+
+.service-section .section-header { margin-bottom: 3rem; }
+.service-section .section-title { font-size: 2rem; }
+
+/* ---------- Offering grid ---------- */
+.offer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+@media (min-width: 640px) { .offer-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .offer-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.offer-card {
+    background: #1f2937;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 1rem;
+    padding: 1.6rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.offer-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(96, 165, 250, 0.4);
+}
+
+.offer-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.6rem;
+}
+
+.offer-card p {
+    font-size: 0.95rem;
+    color: #9ca3af;
+}
+
+.offer-icon {
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 0.85rem;
+}
+
+/* ---------- Work samples ---------- */
+.work-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+@media (min-width: 640px) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.work-item {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #111827;
+}
+
+.work-item img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.work-item:hover img { transform: scale(1.04); }
+
+.work-caption {
+    padding: 1rem 1.2rem 1.3rem;
+}
+
+.work-caption h3 {
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.work-caption p {
+    font-size: 0.9rem;
+    color: #9ca3af;
+}
+
+/* ---------- Process steps ---------- */
+.step-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+}
+
+@media (min-width: 768px) { .step-list { grid-template-columns: repeat(2, 1fr); } }
+
+.step-list li {
+    position: relative;
+    background: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0.85rem;
+    padding: 1.4rem 1.4rem 1.4rem 4.2rem;
+}
+
+.step-list li::before {
+    counter-increment: step;
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 1.3rem;
+    top: 1.3rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.step-list h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.35rem;
+}
+
+.step-list p {
+    font-size: 0.93rem;
+    color: #9ca3af;
+}
+
+/* ---------- Pricing ---------- */
+.pricing-panel {
+    max-width: 34rem;
+    margin: 0 auto;
+    background: #1f2937;
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    border-radius: 1.1rem;
+    padding: 2.2rem 1.8rem;
+    text-align: center;
+}
+
+.pricing-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+}
+
+.pricing-note {
+    color: #9ca3af;
+    font-size: 0.95rem;
+    margin-top: 0.4rem;
+}
+
+.pricing-includes {
+    list-style: none;
+    padding: 0;
+    margin: 1.6rem 0 1.8rem;
+    text-align: left;
+    display: inline-block;
+}
+
+.pricing-includes li {
+    position: relative;
+    padding-left: 1.6rem;
+    margin-bottom: 0.6rem;
+    color: #d1d5db;
+    font-size: 0.95rem;
+}
+
+.pricing-includes li::before {
+    content: '\2713';
+    position: absolute;
+    left: 0;
+    color: #4ade80;
+    font-weight: 700;
+}
+
+/* ---------- FAQ ---------- */
+.faq-list {
+    max-width: 46rem;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.faq-item summary {
+    cursor: pointer;
+    padding: 1.15rem 2rem 1.15rem 0;
+    font-weight: 600;
+    color: #f3f4f6;
+    font-size: 1rem;
+    position: relative;
+    list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 0.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+    color: #60a5fa;
+    line-height: 1;
+}
+
+.faq-item[open] summary::after { content: '\2013'; }
+
+.faq-item summary:hover { color: #60a5fa; }
+
+.faq-item summary:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 3px;
+    border-radius: 0.25rem;
+}
+
+.faq-answer {
+    padding: 0 0 1.3rem;
+    color: #9ca3af;
+    font-size: 0.97rem;
+    line-height: 1.7;
+}
+
+/* ---------- Closing CTA ---------- */
+.cta-band {
+    background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 4.5rem 1rem;
+    text-align: center;
+}
+
+.cta-band h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 0.9rem;
+}
+
+.cta-band p {
+    color: #d1d5db;
+    max-width: 38rem;
+    margin: 0 auto 2rem;
+}
+
+.cta-methods {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    max-width: 40rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 640px) { .cta-methods { grid-template-columns: repeat(2, 1fr); } }
+
+.cta-method {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem 1.1rem;
+    background: #111827;
+    border: 1px solid #374151;
+    border-radius: 0.65rem;
+    text-decoration: none;
+    color: #f3f4f6;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+    text-align: left;
+}
+
+.cta-method:hover {
+    border-color: #60a5fa;
+    transform: translateY(-2px);
+}
+
+.cta-method svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: #60a5fa;
+}
+
+.cta-method span {
+    display: block;
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+.cta-method strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+/* ---------- Cross-links to the other services ---------- */
+.sibling-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 46rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 640px) { .sibling-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.sibling-card {
+    display: block;
+    padding: 1.3rem;
+    background: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 0.85rem;
+    text-decoration: none;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.sibling-card:hover {
+    border-color: #a78bfa;
+    transform: translateY(-3px);
+}
+
+.sibling-card strong {
+    display: block;
+    color: #ffffff;
+    font-size: 1.02rem;
+    margin-bottom: 0.3rem;
+}
+
+.sibling-card span {
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+/* ---------- Homepage: link from each service card ---------- */
+.service-more-link {
+    display: inline-block;
+    margin-top: 0.9rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #60a5fa;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.service-more-link:hover { color: #a78bfa; }
+
+.footer-link.footer-service-link { cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+    .offer-card, .work-item img, .cta-method, .sibling-card { transition: none; }
+    .offer-card:hover, .cta-method:hover, .sibling-card:hover { transform: none; }
+    .work-item:hover img { transform: none; }
+}
