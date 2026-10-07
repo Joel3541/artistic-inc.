@@ -878,6 +878,9 @@
                                 <label for="message">Message</label>
                                 <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
                             </div>
+                            <!-- Spam trap: hidden from people, filled in by bots. Formspree discards those. -->
+                            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
+                                   aria-hidden="true" style="display:none !important;">
                             <button type="submit" class="btn-primary full-width">Send Message</button>
                         </form>
                     </div>

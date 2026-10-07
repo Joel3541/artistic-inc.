@@ -95,7 +95,7 @@ function handleFilterClick(e) {
 // the visitor's email app with the message pre-filled, so an
 // enquiry is never silently lost.
 // ============================================================
-const FORM_ENDPOINT = ''; // e.g. 'https://formspree.io/f/xxxxxxxx'
+const FORM_ENDPOINT = 'https://formspree.io/f/xbgddzry';
 const CONTACT_EMAIL = 'joeljacksonduker@gmail.com';
 const CONTACT_WHATSAPP = '233264842982';
 
@@ -154,6 +154,9 @@ async function handleContactFormSubmit(e) {
         fallbackToMailto(data);
         return;
     }
+
+    // Make the notification email scannable in the inbox
+    formData.set('_subject', 'Artistic Inc. enquiry: ' + data.subject);
 
     const submitBtn = contactForm.querySelector('button[type="submit"]');
     const originalLabel = submitBtn ? submitBtn.textContent : '';
