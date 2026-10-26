@@ -1698,3 +1698,102 @@ body {
 @media print {
     .whatsapp-fab { display: none; }
 }
+
+/* ============================================================
+   Floating Telegram enquiry button (mirrors the WhatsApp one)
+   ------------------------------------------------------------
+   Telegram has no equivalent of wa.me's ?text= for a DM to a
+   person, so the opening message is copied to the clipboard on
+   click and the visitor pastes it into the chat that opens.
+   ============================================================ */
+.telegram-fab {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 9998;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.85rem;
+    border-radius: 9999px;
+    background: #229ed9;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1;
+    box-shadow: 0 10px 25px -5px rgba(34, 158, 217, 0.45),
+                0 4px 6px -4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.telegram-fab svg {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: block;
+}
+
+/* Icon only on phones; full label from tablet up */
+.telegram-fab .telegram-fab-label {
+    display: none;
+    padding-right: 0.4rem;
+}
+
+@media (min-width: 768px) {
+    .telegram-fab .telegram-fab-label { display: inline; }
+}
+
+.telegram-fab:hover,
+.telegram-fab:focus-visible {
+    background: #1b8ac0;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px -5px rgba(34, 158, 217, 0.6),
+                0 4px 6px -4px rgba(0, 0, 0, 0.5);
+}
+
+.telegram-fab:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+}
+
+/* Confirmation that the opening message is on the clipboard */
+.fab-toast {
+    position: fixed;
+    bottom: 5.25rem;
+    left: 1.5rem;
+    z-index: 9999;
+    max-width: min(20rem, calc(100vw - 3rem));
+    padding: 0.7rem 0.95rem;
+    border-radius: 0.6rem;
+    background: #1f2937;
+    color: #f3f4f6;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+    font-size: 0.85rem;
+    line-height: 1.45;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+}
+
+.fab-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    .telegram-fab { bottom: 1rem; left: 1rem; padding: 0.8rem; }
+    .telegram-fab svg { width: 26px; height: 26px; }
+    .fab-toast { bottom: 4.75rem; left: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .telegram-fab, .fab-toast { transition: none; }
+}
+
+@media print {
+    .telegram-fab, .fab-toast { display: none; }
+}

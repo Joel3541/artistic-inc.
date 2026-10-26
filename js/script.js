@@ -328,3 +328,83 @@ function initAnimations() {
         scrollObserver.observe(element);
     });
 }
+
+
+// ============================================================
+// Telegram button
+// ------------------------------------------------------------
+// Telegram has no equivalent of wa.me's ?text= for a direct message
+// to a person: ?text= only works for the share dialog (which makes the
+// visitor pick a recipient) and for bots. So the opening line is copied
+// to the clipboard on click and the chat opens ready to paste.
+// If the clipboard is unavailable the link still opens the chat, which
+// is the behaviour a plain Telegram link would have given anyway.
+// ============================================================
+(function () {
+    // script.js is loaded before the floating buttons in the markup, so wait
+    // for the DOM rather than querying for an element that does not exist yet.
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTelegramFab);
+    } else {
+        initTelegramFab();
+    }
+
+    function initTelegramFab() {
+    var fab = document.querySelector('.telegram-fab');
+    if (!fab) return;
+
+    var message = fab.getAttribute('data-prefill') || '';
+    var toast;
+
+    function showToast(text) {
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'fab-toast';
+            toast.setAttribute('role', 'status');
+            toast.setAttribute('aria-live', 'polite');
+            document.body.appendChild(toast);
+        }
+        toast.textContent = text;
+        // next frame, so the transition runs from the hidden state
+        requestAnimationFrame(function () { toast.classList.add('is-visible'); });
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(function () {
+            toast.classList.remove('is-visible');
+        }, 5000);
+    }
+
+    function copyLegacy(text) {
+        try {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+            return ok;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    fab.addEventListener('click', function () {
+        // Never block the link: the chat opens whether or not the copy works.
+        if (!message) return;
+
+        var copied = function () {
+            showToast('Your opening message is copied — just paste it into the chat.');
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(message).then(copied)['catch'](function () {
+                if (copyLegacy(message)) copied();
+            });
+        } else if (copyLegacy(message)) {
+            copied();
+        }
+    });
+    }
+})();
