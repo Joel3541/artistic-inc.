@@ -408,3 +408,181 @@ function initAnimations() {
     });
     }
 })();
+
+
+// ============================================================
+// Project detail view
+// ------------------------------------------------------------
+// The "View Details" buttons previously did nothing at all. This
+// builds a detail panel from whatever is already in the clicked
+// .portfolio-item, so adding a project to the grid is enough --
+// no JS changes needed for new work.
+// ============================================================
+(function () {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initProjectViewer);
+    } else {
+        initProjectViewer();
+    }
+
+    function initProjectViewer() {
+        var grid = document.getElementById('portfolioGrid');
+        if (!grid) return;
+
+        var WA = '233264842982';
+        var overlay, panel, figure, body, counter, lastFocused;
+        var items = [];      // the set currently navigable (respects the active filter)
+        var index = 0;
+
+        function visibleItems() {
+            return Array.prototype.filter.call(
+                grid.querySelectorAll('.portfolio-item'),
+                function (el) { return el.offsetParent !== null; }
+            );
+        }
+
+        function build() {
+            overlay = document.createElement('div');
+            overlay.className = 'pv-overlay';
+            overlay.setAttribute('role', 'dialog');
+            overlay.setAttribute('aria-modal', 'true');
+            overlay.setAttribute('aria-label', 'Project details');
+            overlay.innerHTML =
+                '<div class="pv-panel">' +
+                  '<figure class="pv-figure"><img alt=""></figure>' +
+                  '<div class="pv-body"></div>' +
+                  '<button class="pv-close" type="button" aria-label="Close">&times;</button>' +
+                  '<button class="pv-nav pv-prev" type="button" aria-label="Previous project">&#8249;</button>' +
+                  '<button class="pv-nav pv-next" type="button" aria-label="Next project">&#8250;</button>' +
+                  '<span class="pv-counter"></span>' +
+                '</div>';
+            document.body.appendChild(overlay);
+
+            panel   = overlay.querySelector('.pv-panel');
+            figure  = overlay.querySelector('.pv-figure img');
+            body    = overlay.querySelector('.pv-body');
+            counter = overlay.querySelector('.pv-counter');
+
+            overlay.querySelector('.pv-close').addEventListener('click', close);
+            overlay.querySelector('.pv-prev').addEventListener('click', function () { step(-1); });
+            overlay.querySelector('.pv-next').addEventListener('click', function () { step(1); });
+            overlay.addEventListener('click', function (e) {
+                if (e.target === overlay) close();
+            });
+        }
+
+        function render() {
+            var item = items[index];
+            if (!item) return;
+
+            var img   = item.querySelector('.portfolio-image img');
+            var title = item.querySelector('.portfolio-title');
+            var desc  = item.querySelector('.portfolio-description');
+            var badge = item.querySelector('.portfolio-badge');
+            var tags  = item.querySelectorAll('.skill-tag');
+
+            figure.src = img ? img.getAttribute('src') : '';
+            figure.alt = img ? (img.getAttribute('alt') || '') : '';
+
+            var titleText = title ? title.textContent.trim() : 'Project';
+            var parts = [];
+
+            if (badge) {
+                parts.push('<span class="pv-badge">' + badge.textContent.trim() + '</span>');
+            }
+            parts.push('<h3 class="pv-title">' + titleText + '</h3>');
+            if (desc && desc.textContent.trim()) {
+                parts.push('<p class="pv-desc">' + desc.textContent.trim() + '</p>');
+            }
+            if (tags.length) {
+                parts.push('<p class="pv-meta-label">Made with</p>');
+                var t = '<div class="pv-tags">';
+                Array.prototype.forEach.call(tags, function (tag) {
+                    t += '<span class="pv-tag">' + tag.textContent.trim() + '</span>';
+                });
+                parts.push(t + '</div>');
+            }
+
+            var msg = 'Hi Joel, I saw "' + titleText +
+                      '" on your portfolio and I’d like to discuss something similar.';
+            parts.push(
+                '<div class="pv-cta">' +
+                  '<a class="pv-wa" href="https://wa.me/' + WA + '?text=' + encodeURIComponent(msg) + '"' +
+                     ' target="_blank" rel="noopener">' +
+                    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+                      '<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.15-.174.2-.298.3-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.83 9.83 0 0 1 2.893 6.994c-.003 5.45-4.437 9.886-9.885 9.886m8.413-18.297A11.82 11.82 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.82 11.82 0 0 0 20.465 3.49"/>' +
+                    '</svg>Discuss a project like this</a>' +
+                  '<a class="pv-alt" href="#contact">Other ways to reach me</a>' +
+                '</div>'
+            );
+
+            body.innerHTML = parts.join('');
+            body.querySelector('.pv-alt').addEventListener('click', close);
+
+            counter.textContent = (index + 1) + ' / ' + items.length;
+            var multiple = items.length > 1;
+            overlay.querySelector('.pv-prev').hidden = !multiple;
+            overlay.querySelector('.pv-next').hidden = !multiple;
+            counter.hidden = !multiple;
+        }
+
+        function step(dir) {
+            if (!items.length) return;
+            index = (index + dir + items.length) % items.length;
+            render();
+        }
+
+        function open(item, trigger) {
+            if (!overlay) build();
+            items = visibleItems();
+            index = items.indexOf(item);
+            if (index < 0) { items = [item]; index = 0; }
+
+            lastFocused = trigger || document.activeElement;
+            render();
+            overlay.classList.add('is-open');
+            document.body.classList.add('pv-locked');
+            // the overlay is visibility:hidden until the class lands, and a
+            // hidden element cannot take focus -- so move focus next frame
+            // setTimeout rather than rAF: rAF is paused on a hidden tab
+            setTimeout(function () {
+                overlay.querySelector('.pv-close').focus();
+            }, 0);
+        }
+
+        function close() {
+            if (!overlay) return;
+            overlay.classList.remove('is-open');
+            document.body.classList.remove('pv-locked');
+            if (lastFocused && lastFocused.focus) lastFocused.focus();
+        }
+
+        // Delegated, so projects added to the grid later are picked up too
+        grid.addEventListener('click', function (e) {
+            // The 'View Details' button only appears on hover, which leaves
+            // touch users with no way in -- so the whole card opens it.
+            var item = e.target.closest('.portfolio-item');
+            if (!item) return;
+            e.preventDefault();
+            open(item, e.target.closest('.portfolio-btn') || item);
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (!overlay || !overlay.classList.contains('is-open')) return;
+            if (e.key === 'Escape') { close(); return; }
+            if (e.key === 'ArrowLeft') { step(-1); return; }
+            if (e.key === 'ArrowRight') { step(1); return; }
+            if (e.key === 'Tab') {
+                // keep focus inside the dialog
+                var f = panel.querySelectorAll('button:not([hidden]), a[href]');
+                if (!f.length) return;
+                var first = f[0], last = f[f.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault(); last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault(); first.focus();
+                }
+            }
+        });
+    }
+})();
