@@ -435,9 +435,11 @@ function initAnimations() {
         var index = 0;
 
         function visibleItems() {
+            // Everything in the current category, including cards the grid has
+            // collapsed behind "View more" -- so one click pages through it all.
             return Array.prototype.filter.call(
                 grid.querySelectorAll('.portfolio-item'),
-                function (el) { return el.offsetParent !== null; }
+                function (el) { return !el.classList.contains('hidden'); }
             );
         }
 
@@ -609,5 +611,84 @@ function initAnimations() {
                 }
             }
         });
+    }
+})();
+
+
+// ============================================================
+// Portfolio "View more"
+// ------------------------------------------------------------
+// 36 cards makes for a very long scroll, so the grid shows one
+// screenful per category and reveals the rest on request. The
+// project detail view still pages through every card in the
+// category, collapsed or not.
+// ============================================================
+(function () {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initViewMore);
+    } else {
+        initViewMore();
+    }
+
+    function initViewMore() {
+        var grid = document.getElementById('portfolioGrid');
+        var btn  = document.getElementById('portfolioMore');
+        if (!grid || !btn) return;
+
+        var STEP = 9;
+        var shown = STEP;
+
+        function inCategory() {
+            return Array.prototype.filter.call(
+                grid.querySelectorAll('.portfolio-item'),
+                function (el) { return !el.classList.contains('hidden'); }
+            );
+        }
+
+        function apply() {
+            var items = inCategory();
+            items.forEach(function (el, i) {
+                if (i < shown) {
+                    el.style.display = 'block';
+                    el.removeAttribute('data-collapsed');
+                } else {
+                    el.style.display = 'none';
+                    el.setAttribute('data-collapsed', '');
+                }
+            });
+
+            var hidden = Math.max(items.length - shown, 0);
+            if (hidden > 0) {
+                btn.hidden = false;
+                btn.textContent = 'View more work (' + hidden + ' more)';
+            } else if (items.length > STEP) {
+                btn.hidden = false;
+                btn.textContent = 'Show less';
+            } else {
+                btn.hidden = true;
+            }
+        }
+
+        btn.addEventListener('click', function () {
+            var items = inCategory();
+            if (shown >= items.length) {
+                shown = STEP;
+                grid.scrollIntoView({ block: 'start' });
+            } else {
+                shown = items.length;
+            }
+            apply();
+        });
+
+        // Re-collapse whenever the category changes. The filter animates
+        // out over 300ms, so settle after it.
+        document.querySelectorAll('.filter-btn').forEach(function (f) {
+            f.addEventListener('click', function () {
+                shown = STEP;
+                setTimeout(apply, 320);
+            });
+        });
+
+        apply();
     }
 })();
