@@ -692,3 +692,46 @@ function initAnimations() {
         apply();
     }
 })();
+
+
+// ============================================================
+// Portfolio category tiles
+// ------------------------------------------------------------
+// Each tile scopes the (hidden) grid to its category and opens
+// the project viewer on the first card, so the visitor pages
+// through that whole category instead of scrolling 36 cards.
+// ============================================================
+(function () {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCategoryTiles);
+    } else {
+        initCategoryTiles();
+    }
+
+    function initCategoryTiles() {
+        var tiles = document.querySelectorAll('.category-tile');
+        var grid  = document.getElementById('portfolioGrid');
+        if (!tiles.length || !grid) return;
+
+        tiles.forEach(function (tile) {
+            tile.addEventListener('click', function () {
+                var cat = tile.getAttribute('data-cat');
+
+                // Scope the grid: the viewer reads its set from these classes
+                if (typeof filterPortfolio === 'function') {
+                    filterPortfolio(cat);
+                } else {
+                    Array.prototype.forEach.call(
+                        grid.querySelectorAll('.portfolio-item'), function (el) {
+                            el.classList.toggle('hidden', el.getAttribute('data-category') !== cat);
+                        });
+                }
+
+                var first = grid.querySelector('.portfolio-item[data-category="' + cat + '"]');
+                if (!first) return;
+                var btn = first.querySelector('.portfolio-btn');
+                if (btn) btn.click();   // delegated handler on the grid opens the viewer
+            });
+        });
+    }
+})();
