@@ -2083,16 +2083,13 @@ body.pv-locked { overflow: hidden; }
 .category-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.25rem;
-    max-width: 60rem;
-    margin: 0 auto;
+    /* 2rem gap and no width cap, so the tiles sit at the same scale the
+       original portfolio cards did inside .section-container */
+    gap: 2rem;
 }
 
-@media (min-width: 600px)  {
-    .category-grid { grid-template-columns: repeat(2, 1fr); }
-    .category-tile-media { aspect-ratio: 4 / 3; }
-}
-@media (min-width: 1024px) { .category-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 600px) { .category-grid { grid-template-columns: repeat(2, 1fr); } }
+/* four categories, so 2x2 keeps every tile the same size -- 3-across would orphan the fourth */
 
 .category-tile {
     position: relative;
