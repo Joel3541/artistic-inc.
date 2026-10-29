@@ -2089,7 +2089,13 @@ body.pv-locked { overflow: hidden; }
 }
 
 @media (min-width: 600px) { .category-grid { grid-template-columns: repeat(2, 1fr); } }
-/* four categories, so 2x2 keeps every tile the same size -- 3-across would orphan the fourth */
+
+/* Three across at the original card width; the fourth category would
+   otherwise sit alone at the left, so drop it into the middle column. */
+@media (min-width: 1024px) {
+    .category-grid { grid-template-columns: repeat(3, 1fr); }
+    .category-tile:nth-child(4):last-child { grid-column: 2; }
+}
 
 .category-tile {
     position: relative;
