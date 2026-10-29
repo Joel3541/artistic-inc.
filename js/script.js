@@ -481,7 +481,8 @@ function initAnimations() {
             var badge = item.querySelector('.portfolio-badge');
             var tags  = item.querySelectorAll('.skill-tag');
 
-            figure.src = img ? img.getAttribute('src') : '';
+            var figureSrc = img ? img.getAttribute('src') : '';
+            figure.src = figureSrc;
             figure.alt = img ? (img.getAttribute('alt') || '') : '';
 
             var titleText = title ? title.textContent.trim() : 'Project';
@@ -516,7 +517,31 @@ function initAnimations() {
                 '</div>'
             );
 
+            // Extra views of the same project, e.g. colourways or a second shot
+            var gallery = (item.getAttribute('data-gallery') || '')
+                              .split('|').filter(function (x) { return x; });
+            if (gallery.length) {
+                var all = [figureSrc].concat(gallery);
+                var strip = '<p class="pv-meta-label">More views</p><div class="pv-thumbs">';
+                all.forEach(function (src, n) {
+                    strip += '<button type="button" class="pv-thumb' + (n === 0 ? ' is-current' : '') +
+                             '" data-src="' + src + '" aria-label="View ' + (n + 1) +
+                             ' of ' + all.length + '"><img src="' + src + '" alt=""></button>';
+                });
+                parts.push(strip + '</div>');
+            }
+
             body.innerHTML = parts.join('');
+
+            body.querySelectorAll('.pv-thumb').forEach(function (t) {
+                t.addEventListener('click', function () {
+                    figure.src = t.getAttribute('data-src');
+                    body.querySelectorAll('.pv-thumb').forEach(function (o) {
+                        o.classList.remove('is-current');
+                    });
+                    t.classList.add('is-current');
+                });
+            });
             body.querySelector('.pv-alt').addEventListener('click', close);
 
             counter.textContent = (index + 1) + ' / ' + items.length;
